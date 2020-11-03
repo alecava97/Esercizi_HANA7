@@ -31,6 +31,10 @@ resources:
       hdi-container-name: '${service-name}'
     type: com.sap.xs.hdi-container
   - name: esercizi_uaa
-    type: com.sap.xs.uaa
+    type: org.cloudfoundry.managed-service
     parameters:
-      path: xs-security.json
+      service-plan: default
+      service: xsuaa
+      config:
+        xsappname: Esercizi_HANA7
+        tenant-mode: dedicated
