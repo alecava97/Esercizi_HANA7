@@ -1,25 +1,36 @@
 ID: Esercizi_HANA7
 _schema-version: '2.1'
 version: 0.0.1
-
 modules:
- - name: js
-   type: nodejs
-   path: js
-   provides:
-    - name: js_api
-      properties:
-         url: ${default-url}
-
- - name: db
-   type: hdb
-   path: db
-   requires:
-    - name: hdi_db
-
-
+  - name: js
+    type: nodejs
+    path: js
+    parameters:
+      memory: 512M
+      disk-quota: 256M
+    provides:
+      - name: js_api
+        properties:
+          url: '${default-url}'
+  - name: db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+    requires:
+      - name: hdi_db
+  - name: web
+    type: html5
+    path: web
+    requires:
+      - name: esercizi_uaa
 resources:
- - name: hdi_db
-   properties:
-      hdi-container-name: ${service-name}
-   type: com.sap.xs.hdi-container
+  - name: hdi_db
+    properties:
+      hdi-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container
+  - name: esercizi_uaa
+    type: com.sap.xs.uaa
+    parameters:
+      path: xs-security.json
